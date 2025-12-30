@@ -1,0 +1,362 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}Inicio - Edichama{% endblock %}
+
+{% block content %}
+<!-- Hero Banner -->
+<section class="bg-primary text-white text-center py-5 vh-100" style="background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('{% static "images/hero-bg.jpg" %}') no-repeat center center; background-size: cover;">
+    <div class="container align-items-center d-flex flex-column justify-content-center h-100">
+        <h1 class="display-4 fw-bold">{% trans "Bienvenido a Edichama" %}</h1>
+        <p class="lead mb-4">{% trans "Tu gabinete de traducción e interpretación profesional y formación en idiomas" %}</p>
+        <div class="d-flex gap-4 justify-content-center">
+            <a href="{% url 'core:service' %}" class="btn btn-lg btn-light">{% trans "Ver Servicios" %}</a>
+            <a href="" class="btn btn-lg btn-outline-light ms-2">{% trans "Nuestros Cursos" %}</a>
+        </div>
+    </div>
+</section>
+
+<!-- Sección Servicios Destacados -->
+
+<section class="py-5">
+    <div class="container">
+
+        <!-- TÍTULO -->
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Nuestros servicios</h2>
+            <p class="text-muted">
+                Soluciones lingüísticas adaptadas a sus necesidades
+            </p>
+        </div>
+        <hr>
+
+        <div class="row g-4">
+
+            <!-- TRADUCCIÓN -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-translate fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">Traducción</h5>
+                        <p class="card-text text-muted">
+                            Traducción profesional de documentos en varias lenguas
+                            con precisión, confidencialidad y respeto de plazos.
+                        </p>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4 mb-3">
+                        <a href="{% url 'core:about' %}" class="btn btn-light btn-lg">{% trans "Saber mas" %}</a>
+                    </div>  
+                </div>
+            </div>
+
+            <!-- INTERPRETACIÓN -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-mic fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">Interpretación</h5>
+                        <p class="card-text text-muted">
+                            Interpretación consecutiva y de enlace para reuniones,
+                            conferencias y eventos profesionales.
+                        </p>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4 mb-3">
+                        <a href="{% url 'core:about' %}" class="btn btn-light btn-lg">{% trans "Saber mas" %}</a>
+                    </div>  
+                </div>
+            </div>
+
+            <!-- FORMACIÓN -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-mortarboard fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">Formación lingüística</h5>
+                        <p class="card-text text-muted">
+                            Formación en lenguas extranjeras adaptada a estudiantes,
+                            profesionales y empresas.
+                        </p>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4 mb-3">
+                        <a href="{% url 'core:about' %}" class="btn btn-light btn-lg">{% trans "Saber mas" %}</a>
+                    </div>  
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="py-5">
+    
+    {% comment %} <div class="container">
+        <h2 class="text-center mb-5">{% trans "Nuestros Servicios" %}</h2>
+        <div class="row g-4">
+            {% for service in services|slice:":3" %}
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ service.name }}</h5>
+                        <p class="card-text">{{ service.description|truncatewords:25 }}</p>
+                        <a href="{% url 'services:detail' service.id %}" class="btn btn-primary">{% trans "Ver Detalles" %}</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div> {% endcomment %}
+</section>
+
+<!-- Sección Cursos Destacados -->
+<section class="bg-light py-5">
+    <div class="container">
+
+        <!-- TÍTULO -->
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Nuestros cursos</h2>
+            <p class="text-muted">
+                Formación lingüística práctica y orientada a resultados
+            </p>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- ESPAÑOL -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-chat-dots fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">Español</h5>
+                        <p class="card-text text-muted">
+                            Cursos de español general y profesional, adaptados a
+                            todos los niveles.
+                        </p>
+                        <a href="#" class="btn btn-outline-primary mt-3">
+                            Ver más
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FRANCÉS -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-chat-square-text fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">Francés</h5>
+                        <p class="card-text text-muted">
+                            Formación en francés para comunicación profesional,
+                            académica y cotidiana.
+                        </p>
+                        <a href="#" class="btn btn-outline-primary mt-3">
+                            Ver más
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INGLÉS -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-globe fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">Inglés</h5>
+                        <p class="card-text text-muted">
+                            Cursos de inglés general y profesional para abrir
+                            nuevas oportunidades internacionales.
+                        </p>
+                        <a href="#" class="btn btn-outline-primary mt-3">
+                            Ver más
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% comment %} actualidad {% endcomment %}
+<section class="py-5">
+    <div class="container">
+
+        <!-- TÍTULO -->
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Actualidad del gabinete</h2>
+            <p class="text-muted">
+                Novedades, anuncios y actividades recientes de Elischama International Language Cabinet
+            </p>
+        </div>
+
+        <hr>
+        <div class="row g-4">
+
+            <!-- NOTICIA 1 -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Apertura de nuevos cursos de español</h5>
+                        <p class="card-text text-muted">
+                            Edichama lanza nuevos cursos de español general y profesional
+                            adaptados a diferentes niveles.
+                        </p>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <small class="text-muted">10 marzo 2025</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOTICIA 2 -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Servicios de interpretación disponibles</h5>
+                        <p class="card-text text-muted">
+                            El gabinete ofrece ahora servicios de interpretación
+                            para reuniones, conferencias y eventos.
+                        </p>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <small class="text-muted">22 febrero 2025</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOTICIA 3 -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Elischama refuerza su equipo lingüístico</h5>
+                        <p class="card-text text-muted">
+                            Nuevos colaboradores se unen al gabinete para ampliar
+                            la oferta lingüística.
+                        </p>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <small class="text-muted">5 febrero 2025</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGINACIÓN DEMO -->
+        <nav class="mt-5">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link">Anterior</a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+
+        </div>
+
+        <!-- BOTÓN --><section class="bg-light py-5">
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Nuestros cursos</h2>
+            <p class="text-muted">
+                Formación en varias lenguas
+            </p>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- CURSO -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Español</h5>
+                        <p class="text-muted">Curso de español general y profesional.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Francés</h5>
+                        <p class="text-muted">Comunicación oral y escrita.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Inglés</h5>
+                        <p class="text-muted">Inglés general y profesional.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        
+
+    </div>
+</section>
+
+
+    </div>
+</section>
+
+
+<!-- Sección Valores / Testimonios -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">{% trans "Nuestros Valores" %}</h2>
+        <div class="row text-center g-4">
+            <div class="col-md-4">
+                <i class="fas fa-user-tie fa-3x mb-3 text-primary"></i>
+                <h5>{% trans "Profesionalismo" %}</h5>
+                <p>{% trans "Actuamos con ética y excelencia en todos nuestros servicios." %}</p>
+            </div>
+            <div class="col-md-4">
+                <i class="fas fa-handshake fa-3x mb-3 text-primary"></i>
+                <h5>{% trans "Confianza" %}</h5>
+                <p>{% trans "Generamos relaciones confiables y transparentes con nuestros clientes." %}</p>
+            </div>
+            <div class="col-md-4">
+                <i class="fas fa-lightbulb fa-3x mb-3 text-primary"></i>
+                <h5>{% trans "Innovación" %}</h5>
+                <p>{% trans "Buscamos constantemente mejorar nuestros servicios y procesos." %}</p>
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+                <a href="{% url 'core:about' %}" class="btn btn-light btn-lg">{% trans "Saber mas" %}</a>
+            </div>        
+
+        </div>
+        
+    </div>
+
+</section>
+
+
+
+
+
+<!-- Llamado a la acción final -->
+<section class=" text-center py-5">
+    <div class="container">
+        <h2 class="mb-4">{% trans "Comienza Hoy Mismo" %}</h2>
+        <p class="mb-4">{% trans "Únete a Elischama y mejora tu comunicación en múltiples idiomas con nuestros expertos." %}</p>
+        <a href="{% url 'core:contact' %}" class="btn btn-light btn-lg">{% trans "Contáctanos" %}</a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}Formación - Elischama{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">{% trans "Cursos Disponibles" %}</h2>
+<div class="row">
+    {% for course in courses %}
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ course.name }}</h5>
+                <p class="card-text">{{ course.duration }} - {{ course.price }}</p>
+                <a href="" class="btn btn-success">{% trans "Inscribirse" %}</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

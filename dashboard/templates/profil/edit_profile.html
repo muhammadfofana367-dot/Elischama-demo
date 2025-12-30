@@ -1,0 +1,33 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block title %}Crear Servicio - Elischama{% endblock %}
+
+
+
+    <div class="card shadow-sm p-3">
+    <h4>Editar</h4>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container mb-3">
+            <div class="row">
+                    {% for campos in form %}
+                        <div class="col-md-4">
+                            <label for="{{campos.id_for_label}}" class="form-label">{{campos.label}}</label>
+                            {{campos|add_class:'form-control'}}
+                            {% if campos.errors %}
+                                {{campos.errors}}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+            </div>
+
+            <div class="d-flex justify-content-center mt-3">
+                <button type="submit" class="btn btn-primary">Editar</button>
+            </div>
+        </div>
+    </form>
+</div>
+

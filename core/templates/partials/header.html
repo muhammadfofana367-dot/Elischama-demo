@@ -1,0 +1,83 @@
+{% load i18n %}
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top mb-2">
+  <div class="container">
+
+    <!-- LOGO + NOMBRE -->
+    <a class="navbar-brand d-flex align-items-center flex-column" href="">
+      <img src="{% static 'img/logosite.png' %}" alt="Elischama" class="img-fluid" width="80" height="80">
+      <span class="fs-6" style="font-size: 10px; font-family: cursive;">Elischama International Language Cabinet</span>
+    </a>
+
+    <!-- TOGGLER MOBILE -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- MENU CENTRO -->
+    <div class="collapse navbar-collapse" id="mainNavbar">
+
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'core:home' %}">{% trans "Inicio" %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'core:service' %}">{% trans "Servicios" %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="">{% trans "Formación" %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="">{% trans "PortFolio" %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'core:contact' %}">{% trans "Contacto" %}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'core:about' %}">{% trans "Acerca de" %}</a>
+        </li>
+      </ul>
+
+      <!-- DERECHA: AUTH + LANG -->
+      <div class="d-flex align-items-center gap-2">
+
+        {% if user.is_authenticated %}
+          <a href="" class="btn btn-outline-primary btn-sm">
+            {% trans "Panel" %}
+          </a>
+
+          <form method="post" action="{% url 'accounts:logout' %}">
+            {% csrf_token %}
+            <button class="btn btn-danger btn-sm">
+              {% trans "Salir" %}
+            </button>
+          </form>
+        {% else %}
+          <a href="{% url 'accounts:login' %}" class="btn btn-outline-primary btn-sm">
+            {% trans "Conexión" %}
+          </a>
+          <a href="{% url 'accounts:registro' %}" class="btn btn-primary btn-sm">
+            {% trans "Registrarse" %}
+          </a>
+        {% endif %}
+
+        <!-- LANG SWITCH -->
+        <form action="{% url 'set_language' %}" method="post">
+          {% csrf_token %}
+          <select name="language" class="form-select form-select-sm" onchange="this.form.submit()">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% for lang in LANGUAGES %}
+              <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %}selected{% endif %}>
+                {{ lang.1 }}
+              </option>
+            {% endfor %}
+          </select>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</nav>

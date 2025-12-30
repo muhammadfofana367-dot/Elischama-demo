@@ -1,0 +1,60 @@
+{% load static %}
+{% load i18n %}
+
+<footer class="bg-dark text-white pt-5">
+  <div class="container p-5">
+
+    <!-- Tres columnas -->
+    <div class="row mb-4">
+      
+      <!-- 1️⃣ Enlaces a páginas -->
+      <div class="col-md-4 mb-3">
+        <h5>{% trans "Enlaces" %}</h5>
+        <ul class="list-unstyled">
+            <li><a href="{% url 'core:home' %}" class="text-white">{% trans "Inicio" %}</a></li>
+            <li><a href="" class="text-white">{% trans "Servicios" %}</a></li>
+            <li><a href="{% url 'core:training' %}" class="text-white">{% trans "Formación" %}</a></li>
+            <li><a href="{% url 'core:about' %}" class="text-white">{% trans "Acerca de Nosotros" %}</a></li>
+            <li><a href="{% url 'core:contact' %}" class="text-white">{% trans "Contacto" %}</a></li>
+        </ul>
+      </div>
+
+      <!-- 2️⃣ Política y confidencialidad -->
+      <div class="col-md-4 mb-3">
+        <h5>{% trans "Política" %}</h5>
+        <ul class="list-unstyled">
+          <li><a href="/privacy-policy" class="text-white">{% trans "Política de Privacidad" %}</a></li>
+          <li><a href="/terms-and-conditions" class="text-white">{% trans "Términos y Condiciones" %}</a></li>
+          <li><a href="/cookies" class="text-white">{% trans "Política de Cookies" %}</a></li>
+        </ul>
+      </div>
+
+      <!-- 3️⃣ Redes sociales -->
+      <div class="col-md-4 mb-3">
+        <h5>{% trans "Síguenos" %}</h5>
+        <ul class="list-unstyled d-flex flex-column gap-2">
+          <li><a href="https://facebook.com" class="text-white"><i class="fab fa-facebook-f me-2"></i>Facebook</a></li>
+          <li><a href="https://twitter.com" class="text-white"><i class="fab fa-twitter me-2"></i>Twitter</a></li>
+          <li><a href="https://instagram.com" class="text-white"><i class="fab fa-instagram me-2"></i>Instagram</a></li>
+          <li><a href="https://linkedin.com" class="text-white"><i class="fab fa-linkedin-in me-2"></i>LinkedIn</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Separador -->
+    <hr class="bg-secondary">
+
+    <!-- Copyright y logo -->
+    <div class="row">
+      <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+        <p class="mb-0">&copy; 2025 Edichama. {% trans "Todos los derechos reservados" %}.</p>
+      </div>
+      <div class="col-md-6 text-center text-md-end d-flex justify-content-center align-items-center">
+        <img src="{% static 'img/mon_logo.png' %}" alt="" class="img-fluid rounded-circle me-0" width="40">
+        <p class="mb-0"><strong>FM</strong> (Fofana Mamadou)</p>
+      </div>
+    </div>
+
+  </div>
+</footer>

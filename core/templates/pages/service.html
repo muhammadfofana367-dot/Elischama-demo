@@ -1,0 +1,94 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}Servicios - Elischama{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">{% trans "Nuestros Servicios" %}</h2>
+<hr>
+<section class="py-5">
+    <div class="container">
+
+        <!-- TÍTULO -->
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Nuestros servicios</h2>
+            <p class="text-muted fs-3">
+                Soluciones lingüísticas adaptadas a sus necesidades
+            </p>
+        </div>
+        <hr>
+
+        <div class="row g-4">
+
+            <!-- TRADUCCIÓN -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-translate fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">Traducción</h5>
+                        <p class="card-text text-muted">
+                            Traducción profesional de documentos en varias lenguas
+                            con precisión, confidencialidad y respeto de plazos.
+                        </p>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4 mb-3">
+                        <a href="{% url 'core:about' %}" class="btn btn-light btn-lg">{% trans "Saber mas" %}</a>
+                    </div>  
+                </div>
+            </div>
+
+            <!-- INTERPRETACIÓN -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-mic fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">Interpretación</h5>
+                        <p class="card-text text-muted">
+                            Interpretación consecutiva y de enlace para reuniones,
+                            conferencias y eventos profesionales.
+                        </p>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4 mb-3">
+                        <a href="{% url 'core:about' %}" class="btn btn-light btn-lg">{% trans "Saber mas" %}</a>
+                    </div>  
+                </div>
+            </div>
+
+            <!-- FORMACIÓN -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-mortarboard fs-1 text-primary mb-3"></i>
+                        <h5 class="card-title">Formación lingüística</h5>
+                        <p class="card-text text-muted">
+                            Formación en lenguas extranjeras adaptada a estudiantes,
+                            profesionales y empresas.
+                        </p>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4 mb-3">
+                        <a href="{% url 'core:about' %}" class="btn btn-light btn-lg">{% trans "Saber mas" %}</a>
+                    </div>  
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+{% comment %} <div class="row">
+    {% for service in services %}
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <img src="{{ service.image.url }}" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">{{ service.name }}</h5>
+                <p class="card-text">{{ service.description }}</p>
+                <a href="{% url 'services:detail' service.id %}" class="btn btn-primary">{% trans "Ver detalles" %}</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div> {% endcomment %}
+{% endblock %}

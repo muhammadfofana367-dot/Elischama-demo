@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% load i18n %}
+{% block title %}Contacto - Edichama{% endblock %}
+
+{% block content %}
+<div class="container_fluid mt-5 mb-5">
+    <div class="container pt-5 pb-5">
+        <h2 class="mb-4 text-center">{% trans "Contactanos" %}</h2>
+        <hr>
+        <form method="post" class="p-5 shadow-sm">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="name" class="form-label">{% trans "Nombre" %}</label>
+                <input type="text" name="name" class="form-control" id="name">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">{% trans "Correo electrónico" %}</label>
+                <input type="email" name="email" class="form-control" id="email">
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">{% trans "Mensaje" %}</label>
+                <textarea name="message" class="form-control" id="message"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">{% trans "Enviar" %}</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

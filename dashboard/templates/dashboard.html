@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block title %}Dashboard - Elischama{% endblock %}
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+{% block content %}
+<body>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .sidebar {
+            background-color: #0d6efd;
+            color: white;
+            min-height: 100vh;
+        }
+        .sidebar .nav-link {
+            color: white;
+        }
+        .sidebar .nav-link:hover {
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 5px;
+        }
+        .profile-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        .sidebar-menu {
+            height: calc(100vh - 60px); /* altura menos header */
+            overflow-y: auto;
+        }
+    </style>
+
+
+
+<!-- NAVBAR SUPERIOR -->
+<nav class="container_fluid navbar fixed-top navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container-fluid">
+
+        <!-- LOGO + NOMBRE -->
+        <a class="navbar-brand d-flex align-items-center" href="" >
+            <img src="{% static 'img/logosite.png' %}" alt="Logo" width="80" class="img-fluid d-inline-block align-top rounded-circle me-4 ">
+            <span class="text-center fs-5 ms-2">Elischama International Lenguage Cabinet</span>
+        </a>
+
+        <!-- BOTÓN RESPONSIVE -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+        </button>
+
+    <!-- CONTENIDO -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+
+        <!-- MENÚ IZQUIERDO -->
+        <ul class="d-flex justify-content-center navbar-nav me-auto mb-2 mb-lg-0">
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'espacio:dashboard' %}">Dashboard</a>
+            </li>
+
+            {% if request.user.role == "admin" %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Usuarios</a>
+                </li>
+            {% endif %}
+            <!-- SERVICIOS -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button"
+                data-bs-toggle="dropdown">
+                Servicios
+                </a>
+                <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="">
+                    Ver servicios
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="">
+                    Añadir servicio
+                    </a>
+                </li>
+                </ul>
+            </li>
+
+            <!-- FORMACIONES -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button"
+                data-bs-toggle="dropdown">
+                Formaciones
+                </a>
+                <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item" href="">
+                    Ver formaciones
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="">
+                    Añadir formación
+                    </a>
+                </li>
+                </ul>
+            </li>
+
+        </ul>
+
+        <!-- USUARIO -->
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle d-flex align-items-center"
+                    href="#" role="button" data-bs-toggle="dropdown">
+
+                    {% if request.user.photo %}
+                    <img src="{{ request.user.photo.url }}"
+                        class="rounded-circle me-2"
+                        width="32" height="32">
+                    {% else %}
+                        <i class="bi bi-person-circle fs-4 me-2"></i>
+                    {% endif %}
+
+                    {{ request.user.username }}
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                    <a class="dropdown-item" href="">
+                        Editar perfil
+                    </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <form action="{% url 'accounts:logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="dropdown-item text-danger">
+                                Cerrar sesión
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+
+            </li>
+        </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<div class="container_fluid pt-5">
+    <div class="row">
+        <!-- SIDEBAR -->
+        <div class="col-md-2 col-lg-2 pt-5  sidebar position-fixed text-center" style="margin: 0px;">
+            <img src="{{ request.user.photo.url}}" class="profile-img mb-2 mt-5">
+            <h6 class="mt-2 fs-4">{{ request.user.get_full_name }}</h6>
+            <span class="badge bg-light text-primary mb-2">@{{request.user.username}} /{{ request.user.role|title }}</span>
+            <hr class="text-white">
+
+            <!-- MENÚ TAB -->
+            <ul class="nav flex-column text-start nav-pills sidebar-menu" id="tabMenu" role="tablist">
+                <li class="nav-item mt-2">
+                    <button class="nav-link active" aria-current="page" id="dashboard-tab" data-bs-toggle="pill" data-bs-target="#dashboard" type="button" role="tab">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </button>
+                </li>
+                <!-- MIS SERVICIOS -->
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle"
+                    data-bs-toggle="collapse"
+                    href="#servicesMenu">
+                    <i class="bi bi-briefcase me-2"></i> Mis servicios
+                    </a>
+
+                    <div class="collapse ps-3" id="servicesMenu">
+                    <a class="nav-link"
+                        data-bs-toggle="pill"
+                        href="#tab-my-services">
+                        📄 Ver Mis servicios
+                    </a>
+                    <a class="nav-link"
+                        data-bs-toggle="pill"
+                        href="#tab-new-request">
+                        ➕ Nueva petición
+                    </a>
+                    </div>
+                </li>
+               
+                <!-- PERFIL -->
+                <li class="nav-item mt-2">
+                    <a class="nav-link dropdown-toggle"
+                    data-bs-toggle="collapse"
+                    href="#profileMenu">
+                    <i class="bi bi-person me-2"></i>Mi Perfil
+                    </a>
+
+                    <div class="collapse ps-3" id="profileMenu">
+                    <a class="nav-link"
+                        data-bs-toggle="pill"
+                        href="#tab-profile-view">
+                        👤 Mi perfil
+                    </a>
+                    <a class="nav-link"
+                        data-bs-toggle="pill"
+                        href="#tab-profile-edit">
+                        ✏️ Editar perfil
+                    </a>
+                    </div>
+                </li>
+
+                <!-- MENSAJES -->
+                <li class="nav-item mt-2">
+                    <a class="nav-link dropdown-toggle"
+                        data-bs-toggle="collapse"
+                        href="#messagesMenu">
+                        <i class="bi bi-envelope me-2"></i> Mensajes
+                    </a>
+
+                    <div class="collapse ps-3" id="messagesMenu">
+                        <a class="nav-link" data-bs-toggle="pill"  href="#tab-messages-inbox">
+                            📥 Mensajes recibidos
+                        </a>
+                        <a class="nav-link" data-bs-toggle="pill"  href="#tab-message-send">
+                            ✉️ Nuevo mensaje
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item mt-4">
+                    <form class="nav-link" action="{% url 'core:home' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link btn btn-link text-warning p-0">
+                            <i class="bi bi-box-arrow-right"></i> Salir
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="col-md-9 col-lg-10 pt-5 mt-5 offset-md-3 offset-lg-2 align-items-center">
+            <div class="tab-content" id="tabContent">
+
+                <!-- DASHBOARD -->
+                <div class="tab-pane fade show active" id="dashboard" role="tabpanel">
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="card shadow-sm text-center">
+                                <div class="card-body">
+                                    <i class="bi bi-file-earmark fs-1 text-primary"></i>
+                                    <h5 class="mt-2">Servicios</h5>
+                                    <p>{{ request.user.services.count }} pedidos</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card shadow-sm text-center">
+                                <div class="card-body">
+                                    <i class="bi bi-hourglass-split fs-1 text-warning"></i>
+                                    <h5 class="mt-2">En proceso</h5>
+                                    <p> servicios</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card shadow-sm text-center">
+                                <div class="card-body">
+                                    <i class="bi bi-check-circle fs-1 text-success"></i>
+                                    <h5 class="mt-2">Terminados</h5>
+                                    <p> servicios</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MIS SERVICIOS -->
+                <div class="tab-pane fade" id="tab-my-services">
+                    <h4 class="mb-3">📂 Mis servicios</h4>
+                    <div class="d-flex justify-content-end mb-2">
+                        <a href="" data-bs-toggle="" class="btn btn-success btn-sm">
+                            <i class="bi bi-upload"></i> Nuevo servicio </a>
+                    </div>
+                    <div class="card-body mt-4">
+                        <div>
+                            <table class="table align-middle">
+                                <thead class="table-primary">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Idiomas</th>
+                                        <th>Estado</th>
+                                        <th>Progreso</th>
+                                        <th>Descarga</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for service in request.user.services.all %}
+                                    <tr>
+                                        <td>{{ service.id }}</td>
+                                        <td>{{ service.source_language }} → {{ service.target_language }}</td>
+                                        <td>
+                                            {% if service.status == 'pending' %}
+                                                <span class="badge bg-secondary">Pendiente</span>
+                                            {% elif service.status == 'progress' %}
+                                                <span class="badge bg-warning">En proceso</span>
+                                            {% else %}
+                                                <span class="badge bg-success">Terminado</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div class="progress">
+                                                <div class="progress-bar" style="width: {{ service.progress }}%">
+                                                    {{ service.progress }}%
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {% if service.can_download %}
+                                                <a href="{{ service.translated_file.url }}" class="btn btn-success btn-sm">Descargar</a>
+                                            {% else %}
+                                                <button class="btn btn-secondary btn-sm" disabled>Bloqueado</button>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="5" class="text-center">No tienes servicios todavía.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- NUEVA PETICIÓN -->
+                <div class="tab-pane fade" id="tab-new-request">
+                    <div class="card shadow-sm p-3">
+                        <h4>📤 Nuevo servicio de traducción</h4>
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="container mb-3">
+                                <div class="row">
+                                    {% for campos in form %}
+                                        <div class="col-md-4">
+                                            <label for="{{campos.id_for_label}}" class="form-label">{{campos.label}}</label>
+                                            {{campos|add_class:'form-control'}}
+                                            {% if campos.errors %}
+                                                {{campos.errors}}
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center mt-3">
+                                <button type="submit" class="btn btn-primary">Enviar documento</button>
+                            </div>
+                        </form>
+                    </div> 
+                </div>
+
+                <!-- PERFIL -->
+                <div class="tab-pane fade" id="tab-profile-view">
+                    <h4>Mi perfil</h4>
+
+                    <ul class="list-group">
+                    <li class="list-group-item"><strong>Nombre:</strong> {{ request.user.get_full_name }}</li>
+                    <li class="list-group-item"><strong>Email:</strong> {{ request.user.email }}</li>
+                    <li class="list-group-item"><strong>Teléfono:</strong> {{ request.user.phone }}</li>
+                    </ul>
+                </div>
+
+                <!-- EDITAR PERFIL -->
+                <div class="tab-pane fade" id="tab-profile-edit">
+                    <h4 class="mb-3">👤 Editar perfil</h4>
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="container">
+                                    <div class="row">
+                                        {% for campo in form_usuario %}
+                                            <div class="col-md-6 mb-3">
+                                                <label for="{{ campo.id_for_label }}" class="form-label">{{ campo.label }}</label>
+                                                {{ campo|add_class:'form-control' }}
+                                                {% if select in campo.name %}
+                                                    <small class="form-text text-muted">Mantén presionado Ctrl (Cmd en Mac) para seleccionar múltiples opciones.</small>
+                                                {% endif %}
+                                                {% if campo.errors %}
+                                                    <div class="text-danger">
+                                                        {{ campo.errors }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                               
+                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- MENSAJES -->
+                <div class="tab-pane fade" id="tab-messages-inbox">
+                    <h4>Mensajes</h4>
+
+                    <div class="list-group">
+
+                        <!-- MENSAJE EJEMPLO -->
+                        <div class="list-group-item">
+                        <div class="d-flex justify-content-between">
+                            <strong>Traductor – Traducción jurídica</strong>
+                            <small class="text-muted">21/12/2025</small>
+                        </div>
+                        <p class="mb-1">
+                            Su trabajo de traducción ha sido finalizado.
+                            Puede descargarlo o contactarnos si necesita cambios.
+                        </p>
+                        <span class="badge bg-success">Trabajo terminado</span>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tab-message-send">
+                    <h4>Nuevo mensaje</h4>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                        <label>Asunto</label>
+                        <input type="text" class="form-control"
+                                placeholder="Ej: Pregunta sobre mi traducción">
+                        </div>
+
+                        <div class="mb-3">
+                        <label>Mensaje</label>
+                        <textarea class="form-control" rows="4"
+                                    placeholder="Escriba su mensaje aquí..."></textarea>
+                        </div>
+
+                        <button class="btn btn-primary">
+                            Enviar mensaje
+                        </button>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+ 
+{% endblock content %}
+</html>
