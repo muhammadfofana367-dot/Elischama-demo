@@ -1,1 +1,2 @@
-web: gunicorn elischama.wsgi
+web: gunicorn Elischama.wsgi:application
+
