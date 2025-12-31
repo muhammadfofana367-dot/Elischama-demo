@@ -32,6 +32,11 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
 ]  # reemplaza con tu dominio Render
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://elischama-demo-0k5i.onrender.com",
+]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 
