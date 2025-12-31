@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-l@z=7azp)en(%0ik_%9cmeo6=4*qb#00&yl3y+85gr2jddc(h@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["edichama.onrender.com"]  # reemplaza con tu dominio Render
+ALLOWED_HOSTS = [
+    "elischama-demo-0k5i.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]  # reemplaza con tu dominio Render
 
 
 # Application definition
